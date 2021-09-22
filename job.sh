@@ -1,4 +1,5 @@
 #! /bin/bash
 
-watch -n 60 python3 RTdata.py 
+python3 RTdata.py && python3 rollingDelete.py 
+
 
