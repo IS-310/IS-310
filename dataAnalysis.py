@@ -43,3 +43,6 @@ print('Internal temp MA: ', internalFeelsLike_MA)
 print('WindSpeed MA: ',windSpeed_MA)
 print('windDirection MA: ', windDirection_MA)
 print('Your rain difference: ', rainDifference)
+
+myList = [internalFeelsLike_MA,windSpeed_MA,windDirection_MA,rainDifference]
+print(myList)
