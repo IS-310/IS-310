@@ -24,16 +24,19 @@ y_present = y_present.reshape(1, -1)
 #print(type(y_present))
 
 pred = loaded_model.predict(y_present)
-
+print('Predicted value is:',pred)
 
 #implement threshold value
 def deploy(predicted_value):
   threshold_value = 1.5
+  
+  
   if (predicted_value > threshold_value):
     print('1')
     return 1
   else:
     print('0')
     return 0
+    
 
 deploy(pred)
