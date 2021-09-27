@@ -52,14 +52,16 @@ rainDifference = calcDiff(latestRainValue,tenMinutesPriorRain)
 latestFeelsLike = df.loc[df.index[-1],'feelsLikein']
 tenMinutesPriorFeelsLike = df.loc[df.index[-10],'feelsLikein']
 tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
+#print(rainDifference)
+#print('Your rain difference: ', rainDifference)
+#print('Feels-like difference: ', tempDifference)
+#print('windDirection MA: ', obtainLastValue(windDirection_MA) )
+#print('WindSpeed MA: ',type(obtainLastValue(windSpeed_MA)))
 
-print('Your rain difference: ', rainDifference)
-print('Feels-like difference: ', tempDifference)
-print('windDirection MA: ', obtainLastValue(windDirection_MA) )
-print('WindSpeed MA: ',obtainLastValue(windSpeed_MA))
 
-
-
+myArr = [rainDifference,tempDifference,obtainLastValue(windDirection_MA),obtainLastValue(windSpeed_MA)]
+#print(type(myArr))
+print(myArr)
 
 
 #print('Type: ', type(internalFeelsLike_MA))

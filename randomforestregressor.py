@@ -8,20 +8,23 @@ Original file is located at
 """
 
 #Import dependencies
-import numpy as np; np.random.seed(0)
+import numpy as np
+from numpy.core.fromnumeric import ravel; np.random.seed(0)
 import pandas as pd
-import matplotlib.pyplot as plt
-from numpy import nan
+
 import io
 from sklearn.ensemble import RandomForestRegressor
 import pickle 
 
+'''
 #import dataset
 from google.colab import files
 uploaded = files.upload()
+'''
 
 name = 'RainData - TRIAL.csv'
-RAIN_DATA = pd.read_csv(io.StringIO(uploaded[name].decode('utf-8')))
+#RAIN_DATA = pd.read_csv(io.StringIO(uploaded[name].decode('utf-8')))
+RAIN_DATA = pd.read_csv(name)
 RAIN_DATA = RAIN_DATA[::-1].reset_index(drop = True)
 dataset = RAIN_DATA.astype(float)
 dataset = dataset.to_numpy()
@@ -41,8 +44,10 @@ tree.fit(x_train_1, y_train_1)
 filename = 'finalized_model.sav'
 pickle.dump(tree, open(filename, 'wb'))
 
+'''
 # load the model from disk
 loaded_model = pickle.load(open(filename, 'rb'))
+
 
 #predict WDR penetration based on current conditions(y_present)
 y_present = y_present.reshape(1, -1)
@@ -57,3 +62,4 @@ def deploy(predicted_value):
     return 0
 
 deploy(pred)
+'''
