@@ -4,6 +4,8 @@ import sys
 import numpy as np
 from warnings import simplefilter
 
+from pandas.core.base import IndexOpsMixin
+
 simplefilter(action='ignore', category=DeprecationWarning)
 
 
@@ -11,7 +13,17 @@ simplefilter(action='ignore', category=DeprecationWarning)
 loaded_model = pickle.load(open('finalized_model.sav', 'rb'))
 
 for line in sys.stdin:
-    y_present = np.fromstring(line[1:-1],dtype=float,sep=',')
+   
+    if line.rstrip() == '[-1,-1,-1,-1]':
+      #print('Exited')
+      sys.exit('No WDR sufficient conditions detected. Rmb to return 0 flag to Pi!')
+     
+      
+    else:
+      
+      #print('Else condition ran')
+      y_present = np.fromstring(line[1:-1],dtype=float,sep=',')
+
 
 #print(y_present)
 #print(type(y_present))

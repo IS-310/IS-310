@@ -23,6 +23,9 @@ def calcDiff(x,y):
     else:
         return 0
 
+
+    
+
 df = pd.read_csv('history.csv') 
 if df.shape[0] < 10:
     sys.exit('Less than 10 values in dataframe. Unable to analyse data yet!')
@@ -58,10 +61,15 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 #print('windDirection MA: ', obtainLastValue(windDirection_MA) )
 #print('WindSpeed MA: ',type(obtainLastValue(windSpeed_MA)))
 
-
 myArr = [rainDifference,tempDifference,obtainLastValue(windDirection_MA),obtainLastValue(windSpeed_MA)]
 #print(type(myArr))
-print(myArr)
+#print(myArr)
+if (rainDifference == 0 and obtainLastValue(windSpeed_MA) == 0):
+    print('[-1,-1,-1,-1]')
+    
+else:
+    print(myArr)
+
 
 
 #print('Type: ', type(internalFeelsLike_MA))
