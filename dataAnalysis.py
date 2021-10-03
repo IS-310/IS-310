@@ -23,8 +23,33 @@ def calcDiff(x,y):
     else:
         return 0
 
+def calcEastVelocity(windSpeed, direction):
+    directionRadian = np.deg2rad(direction)
+    #print(directionRadian)
+    #print(windSpeed * np.sin(directionRadian))
+    return windSpeed * np.sin(directionRadian)
 
+def calcNorthVelocity(windSpeed, direction):
+    directionRadian = np.deg2rad(direction)
+    #print(directionRadian)
+    #print(windSpeed * np.cos(directionRadian))
+    return windSpeed * np.cos(directionRadian)
+
+def summation(df, windowSize):
+    summationEast = 0
+    summationNorth = 0
+    windowSize = -windowSize
+    for rowNum in range(windowSize,0):
+        windSpeed = df.loc[df.index[rowNum],'windspeedmph']
+        windDirection = df.loc[df.index[rowNum],'winddir']
+        summationEast += calcEastVelocity(windSpeed,windDirection)
+        summationNorth += calcNorthVelocity(windSpeed,windDirection)
     
+    summationEastAverage = summationEast / windowSize
+    summationNorthAverage = summationNorth / windowSize
+    averageWindVelocity = np.sqrt(np.square(summationEastAverage) + np.square(summationNorthAverage))
+    return averageWindVelocity
+
 
 df = pd.read_csv('history.csv') 
 if df.shape[0] < 10:
@@ -35,17 +60,17 @@ pd.set_option('display.max_columns',None)
 
 
 internalFeelsLike = df['feelsLikein']
-windSpeed = df['windspeedmph']
+#windSpeed = df['windspeedmph']
 windDirection = df['winddir']
 dailyRain = df['dailyrainin']
 
 internalFeelsLike = internalFeelsLike.to_numpy()
 #print('Type: ',type(internalFeelsLike))
-windSpeed = windSpeed.to_numpy()
+#windSpeed = windSpeed.to_numpy()
 windDirection = windDirection.to_numpy()
 
 #internalFeelsLike_MA = moving_average(internalFeelsLike,10)
-windSpeed_MA = moving_average(windSpeed,10)
+windSpeedAverage = summation(df,10)
 windDirection_MA = moving_average(windDirection,10)
 
 latestRainValue = df.loc[df.index[-1],'dailyrainin']
@@ -61,10 +86,12 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 #print('windDirection MA: ', obtainLastValue(windDirection_MA) )
 #print('WindSpeed MA: ',type(obtainLastValue(windSpeed_MA)))
 
-myArr = [rainDifference,tempDifference,obtainLastValue(windDirection_MA),obtainLastValue(windSpeed_MA)]
+
+
+myArr = [rainDifference,tempDifference,obtainLastValue(windDirection_MA),windSpeedAverage]
 #print(type(myArr))
 #print(myArr)
-if (rainDifference == 0 and obtainLastValue(windSpeed_MA) == 0):
+if (rainDifference == 0 and windSpeedAverage == 0):
     print('[-1,-1,-1,-1]')
     
 else:
