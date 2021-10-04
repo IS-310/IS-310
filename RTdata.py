@@ -21,15 +21,15 @@ myDictOutdoor = deviceOutdoor.last_data
 
 def fahrenToCelsius(x):
         x = (x - 32) / 1.8
-        return round(float(x),3)
+        return float(x) #No rounding off in intermediary steps
 
 def mphToMps(x):
     x = x * 0.44704
-    return round(float(x),3)
+    return float(x)        #No rounding off in intermediary steps
 
 def inchToMm(x):
     x = x * 25.4
-    return round(float(x),3)
+    return float(x)        #No rounding off in intermediary steps
 
 df = pd.DataFrame([myDictIndoor])
 dfOutdoor = pd.DataFrame([myDictOutdoor])
