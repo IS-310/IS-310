@@ -5,6 +5,7 @@ import numpy as np
 from warnings import simplefilter
 
 from pandas.core.base import IndexOpsMixin
+import serial
 
 simplefilter(action='ignore', category=DeprecationWarning)
 
@@ -51,4 +52,7 @@ def deploy(predicted_value):
     return 0
     
 
-deploy(pred)
+cmd = deploy(pred)
+ser = serial.Serial('/dev/ttyACM0', 9600)
+ser.write(b'%d'%cmd)
+print(cmd, 'completed')
