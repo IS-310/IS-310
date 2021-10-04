@@ -92,11 +92,13 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 myArr = [rainDifference,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
 #print(type(myArr))
 #print(myArr)
+'''
 if (rainDifference == 0 and windSpeedAverage == 0):
     print('[-1,-1,-1,-1]')
     
 else:
-    print(myArr)
+'''
+print(myArr)
 
 
 

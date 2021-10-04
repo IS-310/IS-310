@@ -10,10 +10,10 @@ simplefilter(action='ignore', category=DeprecationWarning)
 
 
 # load the model from disk
-loaded_model = pickle.load(open('finalized_model.sav', 'rb'))
+loaded_model = pickle.load(open('KNN_latest_model.sav', 'rb'))
 
 for line in sys.stdin:
-   
+
     if line.rstrip() == '[-1,-1,-1,-1]':
       #print('Exited')
       sys.exit('No WDR sufficient conditions detected. Rmb to return 0 flag to Pi!')
@@ -23,7 +23,7 @@ for line in sys.stdin:
       
       #print('Else condition ran')
       y_present = np.fromstring(line[1:-1],dtype=float,sep=',')
-
+  
 
 #print(y_present)
 #print(type(y_present))
