@@ -50,6 +50,12 @@ def summation(df, windowSize):
     averageWindVelocity = np.sqrt(np.square(summationEastAverage) + np.square(summationNorthAverage))
     return averageWindVelocity
 
+def retract(df):
+    rainSum = df['hourlyrainin'].tail(10).sum()
+    if (rainSum == 0):
+        return 1
+    else:
+        return 0
 
 df = pd.read_csv('history.csv') 
 if df.shape[0] < 10:
@@ -88,17 +94,16 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 #print('WindSpeed MA: ',type(obtainLastValue(windSpeed_MA)))
 
 
-
+toRetract = retract(df)
 myArr = [rainDifference,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
 #print(type(myArr))
 #print(myArr)
-'''
-if (rainDifference == 0 and windSpeedAverage == 0):
+
+if toRetract:
     print('[-1,-1,-1,-1]')
     
 else:
-'''
-print(myArr)
+    print(myArr)
 
 
 
