@@ -71,6 +71,7 @@ windDirection = windDirection.to_numpy()
 
 #internalFeelsLike_MA = moving_average(internalFeelsLike,10)
 windSpeedAverage = summation(df,10)
+windSpeedMax = df['windspeedmph'].tail(10).max()
 windDirection_MA = moving_average(windDirection,10)
 
 latestRainValue = df.loc[df.index[-1],'dailyrainin']
@@ -88,7 +89,7 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 
 
 
-myArr = [rainDifference,tempDifference,obtainLastValue(windDirection_MA),windSpeedAverage]
+myArr = [rainDifference,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
 #print(type(myArr))
 #print(myArr)
 if (rainDifference == 0 and windSpeedAverage == 0):
