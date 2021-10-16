@@ -6,8 +6,8 @@ import sys
 Remember to ensure RTData is running for suitable duration so we collect > 5 data sets before we run this script 
 else there may be indexing error.
 '''
-def moving_average(x,w):
-    return np.convolve(x, np.ones(w),'valid') / w
+#def moving_average(x,w):
+ #   return np.convolve(x, np.ones(w),'valid') / w
 
 def calcDiffNegative(x,y):
     z = x - y
@@ -44,11 +44,36 @@ def summation(df, windowSize):
         windDirection = df.loc[df.index[rowNum],'winddir']
         summationEast += calcEastVelocity(windSpeed,windDirection)
         summationNorth += calcNorthVelocity(windSpeed,windDirection)
-    
+    return summationEast, summationNorth
+
+def calcAverageWindVelocity(windowSize, summationEast, summationNorth):
     summationEastAverage = summationEast / windowSize
     summationNorthAverage = summationNorth / windowSize
     averageWindVelocity = np.sqrt(np.square(summationEastAverage) + np.square(summationNorthAverage))
     return averageWindVelocity
+    
+def calcAverageWindDirection(windowSize, summationEast, summationNorth):
+    summationEastAverage = summationEast / windowSize
+    summationNorthAverage = summationNorth / windowSize
+    if (summationEastAverage == 0 and summationNorthAverage == 0):
+        return 0
+    elif (summationEastAverage == 0 and summationNorthAverage > 0):
+        return np.pi
+    elif (summationEastAverage == 0 and summationNorthAverage < 0):
+        return 0
+    elif (summationEastAverage < 0 and summationNorthAverage == 0):
+        return (np.pi)/2
+    elif (summationEastAverage > 0 and summationNorthAverage == 0):
+        return (3/4)*2*np.pi
+    else:
+        windDirRad = np.arctan(summationEastAverage/summationNorthAverage)
+        if (windDirRad < np.pi):
+            windDirRad += np.pi
+        elif (windDirRad > np.pi):
+            windDirRad -= np.pi
+        
+        return windDirRad
+    
 
 def retract(df):
     rainSum = df['hourlyrainin'].tail(10).sum()
@@ -76,9 +101,11 @@ internalFeelsLike = internalFeelsLike.to_numpy()
 windDirection = windDirection.to_numpy()
 
 #internalFeelsLike_MA = moving_average(internalFeelsLike,10)
-windSpeedAverage = summation(df,10)
+tuple_EastNorthVelocitySummation = summation(df,10)
+windSpeedAverage = calcAverageWindVelocity(10,*tuple_EastNorthVelocitySummation)
 windSpeedMax = df['windspeedmph'].tail(10).max()
-windDirection_MA = moving_average(windDirection,10)
+windDirectionAverage = calcAverageWindDirection(10,*tuple_EastNorthVelocitySummation)
+
 
 latestRainValue = df.loc[df.index[-1],'dailyrainin']
 tenMinutesPriorRain = df.loc[df.index[-10],'dailyrainin'] #Remember must have minimally 5 datasets to run else index error
@@ -95,7 +122,7 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 
 
 toRetract = retract(df)
-myArr = [rainDifference,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
+myArr = [rainDifference,windSpeedMax, windSpeedAverage,windDirectionAverage] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
 #print(type(myArr))
 #print(myArr)
 
