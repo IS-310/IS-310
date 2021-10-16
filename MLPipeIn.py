@@ -13,6 +13,7 @@ ser = serial.Serial('/dev/ttyACM0', 9600)
 '''
 simplefilter(action='ignore', category=DeprecationWarning)
 
+globals.initialize()
 # load the model from disk
 loaded_model = pickle.load(open('KNN_latest_model.sav', 'rb'))
 
