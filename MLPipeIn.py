@@ -55,9 +55,9 @@ for line in sys.stdin:
     else:
         y_present = np.fromstring(line[1:-1],dtype=float,sep=',')
         y_present = y_present.reshape(1, -1)
-        pred = loaded_model.predict(y_present)
+        pred = 10**loaded_model.predict(y_present)
         print('Predicted value is:', pred)
-        cmd = deploy(pred,1.2)
+        cmd = deploy(10**pred,1.91)
 
 '''
 ser.write(b'%d'%cmd)
