@@ -15,7 +15,7 @@ simplefilter(action='ignore', category=DeprecationWarning)
 
 #globals.initialize()
 # load the model from disk
-loaded_model = pickle.load(open('KNN_latest_model.sav', 'rb'))
+loaded_model = pickle.load(open('KNN_Updated_17OCT.sav', 'rb'))
 
 def deploy(predicted_value, corridor_width):
   threshold_value = corridor_width/2
@@ -57,7 +57,7 @@ for line in sys.stdin:
         y_present = y_present.reshape(1, -1)
         pred = loaded_model.predict(y_present)
         print('Predicted value is:', pred)
-        cmd = deploy(pred)
+        cmd = deploy(pred,1.2)
 
 '''
 ser.write(b'%d'%cmd)
