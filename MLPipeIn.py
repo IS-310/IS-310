@@ -57,7 +57,7 @@ for line in sys.stdin:
         y_present = y_present.reshape(1, -1)
         pred = 10**loaded_model.predict(y_present)
         print('Predicted value is:', pred)
-        cmd = deploy(10**pred,1.91)
+        cmd = deploy(pred,1.91)
 
 '''
 ser.write(b'%d'%cmd)
