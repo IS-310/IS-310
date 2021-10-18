@@ -5,6 +5,8 @@ import numpy as np
 from warnings import simplefilter
 from datetime import datetime 
 #import globals
+import pickle as serializer
+
 
 '''
 import serial
@@ -51,13 +53,22 @@ for line in sys.stdin:
         globals.blindStatus = 0
         '''
         cmd = 2
+        file = open('logResults.txt','a')
+        file.write(current_time + ' No rain\n')
+        file.close()
 
     else:
         y_present = np.fromstring(line[1:-1],dtype=float,sep=',')
         y_present = y_present.reshape(1, -1)
         pred = 10**loaded_model.predict(y_present)
         print('Predicted value is:', pred)
+        
         cmd = deploy(pred,1.91)
+        file = open('logResults.txt','a')
+        file.write(current_time + ' Input array: ' + line + ' Predicted depth: ' + str(pred) + '\n')
+        file.close()
+
+
 
 '''
 ser.write(b'%d'%cmd)
