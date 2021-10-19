@@ -4,7 +4,6 @@ import sys
 import numpy as np
 from warnings import simplefilter
 from datetime import datetime 
-#import globals
 import pickle as serializer
 import shelve
 
@@ -16,7 +15,6 @@ ser = serial.Serial('/dev/ttyACM0', 9600)
 '''
 simplefilter(action='ignore', category=DeprecationWarning)
 
-#globals.initialize()
 # load the model from disk
 loaded_model = pickle.load(open('KNN_Updated_17OCT.sav', 'rb'))
 sh = shelve.open('globals')
@@ -39,8 +37,8 @@ def deploy(predicted_value, corridor_width):
     return 0
 
 now = datetime.now()
-current_time = now.strftime('%H:%M:%S')
-print(f'The current time is {current_time}')
+current_time = now.strftime('%d-%m-%y %H:%M:%S')
+print(f'The current date/time is {current_time}')
 
 for line in sys.stdin:
 
@@ -53,11 +51,7 @@ for line in sys.stdin:
           print('Retracting blind now')
           sh['blindStatus'] = 0
           
-        
         cmd = 2
-        file = open('logResults.txt','a')
-        file.write(current_time + ' No rain\n')
-        file.close()
 
     else:
         y_present = np.fromstring(line[1:-1],dtype=float,sep=',')
@@ -78,7 +72,3 @@ ser.write(b'%d'%cmd)
 print(cmd, 'completed')
 ser.flush()
 '''
-#line = ser.readline().decode('utf-8')
-#line = ser.readline().decode('utf-8')
-#parsed = [x.rstrip() for x in line]
-#print(line)

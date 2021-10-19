@@ -21,3 +21,11 @@
 11:53:58 Input array: [7.1,1.5,0.255189,1.842] Predicted depth: [[1.83346666]]
 11:54:04 No rain
 11:54:09 No rain
+14:21:28 No rain
+14:21:40 No rain
+14:21:44 No rain
+14:21:50 No rain
+14:22:06 No rain
+14:22:20 Input array: [7.1,1.5,0.255189,1.842] Predicted depth: [[1.83346666]]
+14:22:52 No rain
+14:23:02 No rain
