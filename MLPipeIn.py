@@ -6,6 +6,7 @@ from warnings import simplefilter
 from datetime import datetime 
 #import globals
 import pickle as serializer
+import shelve
 
 
 '''
@@ -18,21 +19,21 @@ simplefilter(action='ignore', category=DeprecationWarning)
 #globals.initialize()
 # load the model from disk
 loaded_model = pickle.load(open('KNN_Updated_17OCT.sav', 'rb'))
+sh = shelve.open('globals')
 
 def deploy(predicted_value, corridor_width):
   threshold_value = corridor_width/2
   if (predicted_value > threshold_value):
     print('1. Deploy command assigned.')
-    return 1
-    '''
-    if(globals.blindStatus == 1):
+    
+    if(sh['blindStatus'] == 1):
       print('Blind is already deployed')
-
+      return 0
     else:
       print('Blind is deploying now!')
-    globals.blindStatus = 1
-    return 1
-    '''
+      sh['blindStatus'] = 1
+      return 1
+    
   else:
     print('0. Threshold not met. Standby command assigned.')
     return 0
@@ -45,13 +46,14 @@ for line in sys.stdin:
 
     if line.rstrip() == '[-1,-1,-1,-1]':
         print('2. Retract command assigned.')
-        '''
-        if(globals.blindStatus == 0):
+        
+        if(sh['blindStatus'] == 0):
           print('Blind is already retracted')
         else:
           print('Retracting blind now')
-        globals.blindStatus = 0
-        '''
+          sh['blindStatus'] = 0
+          
+        
         cmd = 2
         file = open('logResults.txt','a')
         file.write(current_time + ' No rain\n')
@@ -68,6 +70,7 @@ for line in sys.stdin:
         file.write(current_time + ' Input array: ' + line + ' Predicted depth: ' + str(pred) + '\n')
         file.close()
 
+sh.close()
 
 
 '''
