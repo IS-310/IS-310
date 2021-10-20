@@ -6,5 +6,5 @@ with open('logResults.txt', 'r') as in_file:
     lines = (line.split("/") for line in stripped if line)
     with open('logResults.csv', 'w') as out_file:
         writer = csv.writer(out_file)
-        writer.writerow(('Date/time','Array Input into ML', 'Predicted Depth'))
+        writer.writerow(('Date/Time', 'Rain','Max Wind','Average WInd','Wind DIr', 'Predicted Depth'))
         writer.writerows(lines)
