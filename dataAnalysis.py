@@ -56,7 +56,7 @@ def calcAverageWindDirection(windowSize, summationEast, summationNorth):
     summationEastAverage = summationEast / windowSize
     summationNorthAverage = summationNorth / windowSize
     if (summationEastAverage == 0 and summationNorthAverage == 0):
-        return 0
+        return -2
     elif (summationEastAverage == 0 and summationNorthAverage > 0):
         return np.pi
     elif (summationEastAverage == 0 and summationNorthAverage < 0):
