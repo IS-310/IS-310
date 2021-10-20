@@ -8,11 +8,11 @@ import pickle as serializer
 import shelve
 
 
-'''
+
 import serial
 
 ser = serial.Serial('/dev/ttyACM0', 9600)
-'''
+
 simplefilter(action='ignore', category=DeprecationWarning)
 
 # load the model from disk
@@ -67,8 +67,8 @@ for line in sys.stdin:
 sh.close()
 
 
-'''
+
 ser.write(b'%d'%cmd)
 print(cmd, 'completed')
 ser.flush()
-'''
+

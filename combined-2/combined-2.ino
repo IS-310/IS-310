@@ -42,11 +42,11 @@ void loop(){
    if (modeValue == LOW){
      // Manual mode
      mode = 1;
-      digitalWrite(modeLED,HIGH);
+      digitalWrite(modeLED,LOW);
    }  else {
      // ML mode
      mode = 0;
-      digitalWrite(modeLED, LOW);
+      digitalWrite(modeLED, HIGH);
    }
    
 // -------- Motor control -------- 
@@ -179,4 +179,3 @@ void loop(){
    }
   }
 }
-

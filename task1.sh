@@ -1,5 +1,5 @@
 #! /bin/bash
 
-python3 RTdata.py && python3 rollingDelete.py && echo 'Completed' 
+python3 RTdata.py && python3 rollingDelete.py && echo 'Weather data querying completed' 
 
 
