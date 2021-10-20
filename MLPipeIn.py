@@ -61,7 +61,7 @@ for line in sys.stdin:
         
         cmd = deploy(pred,1.91)
         file = open('logResults.txt','a')
-        file.write(current_time + ' Input array: ' + line + ' Predicted depth: ' + str(pred) + '\n')
+        file.write(current_time + ' Input array: ' + line + ' Predicted depth: ' + str(pred) + '\n\n')
         file.close()
 
 sh.close()
