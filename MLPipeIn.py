@@ -1,4 +1,4 @@
-from os import sep
+import os
 import pickle
 import sys
 import numpy as np
@@ -6,7 +6,7 @@ from warnings import simplefilter
 from datetime import datetime 
 import pickle as serializer
 import shelve
-
+import csv 
 
 '''
 import serial
@@ -60,9 +60,27 @@ for line in sys.stdin:
         print('Predicted value is:', pred)
         
         cmd = deploy(pred,1.91)
+        if os.path.isfile('logResults.csv'):
+            loggedResults = [current_time,line,pred]
+            f = open('logResults.csv','a')
+            csv_writer = csv.writer(f)
+            csv_writer.writerow(loggedResults)
+            f.close()
+
+        else:
+            header = ['Date/Time', 'Array Input to ML', 'Predicted Depth']
+            loggedResults = [current_time,line,pred]
+            f = open('logResults.csv','w')
+            csv_writer = csv.writer(f)
+            csv_writer.writerow(header)
+            csv_writer.writerow(loggedResults)
+            f.close()
+
+        '''
         file = open('logResults.txt','a')
         file.write(current_time + ' Input array: ' + line + ' Predicted depth: ' + str(pred) + '\n\n')
         file.close()
+        '''
 
 sh.close()
 
