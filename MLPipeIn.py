@@ -40,6 +40,11 @@ now = datetime.now()
 current_time = now.strftime('%d-%m-%y %H:%M:%S')
 print(f'The current date/time is {current_time}')
 
+def arrayExtractor(myLine):
+    stripped = myLine[1:-1].strip()
+    parsedLine = stripped.split(",") 
+    return parsedLine
+
 for line in sys.stdin:
 
     if line.rstrip() == '[-1,-1,-1,-1]':
@@ -58,18 +63,32 @@ for line in sys.stdin:
         y_present = y_present.reshape(1, -1)
         pred = 10**loaded_model.predict(y_present)
         print('Predicted value is:', pred)
+        #print(arrayExtractor(line))
         
         cmd = deploy(pred,1.91)
         if os.path.isfile('logResults.csv'):
-            loggedResults = [current_time,line,pred]
+            arrayData = arrayExtractor(line)
+            rain = arrayData[0]
+            maxWind = arrayData[1]
+            averageWind = arrayData[2]
+            windDir = arrayData[3]
+            parsedPred = str(pred)[2:-2]
+            loggedResults = [current_time,rain,maxWind,averageWind,windDir,parsedPred]
             f = open('logResults.csv','a')
             csv_writer = csv.writer(f)
             csv_writer.writerow(loggedResults)
             f.close()
 
         else:
-            header = ['Date/Time', 'Array Input to ML', 'Predicted Depth']
-            loggedResults = [current_time,line,pred]
+            arrayData = arrayExtractor(line)
+            rain = arrayData[0]
+            maxWind = arrayData[1]
+            averageWind = arrayData[2]
+            windDir = arrayData[3]
+            parsedPred = str(pred)[2:-2]
+            header = ['Date/Time', 'Rain','Max Wind','Average WInd','Wind DIr', 'Predicted Depth']
+            loggedResults = [current_time,rain,maxWind,averageWind,windDir,parsedPred]
+            
             f = open('logResults.csv','w')
             csv_writer = csv.writer(f)
             csv_writer.writerow(header)
