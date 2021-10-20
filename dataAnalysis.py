@@ -102,6 +102,7 @@ windDirection = windDirection.to_numpy()
 
 #internalFeelsLike_MA = moving_average(internalFeelsLike,10)
 tuple_EastNorthVelocitySummation = summation(df,10)
+#print(tuple_EastNorthVelocitySummation)
 windSpeedAverage = calcAverageWindVelocity(10,*tuple_EastNorthVelocitySummation)
 windSpeedMax = df['windspeedmph'].tail(10).max()
 windDirectionAverage = calcAverageWindDirection(10,*tuple_EastNorthVelocitySummation)
