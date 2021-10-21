@@ -31,6 +31,12 @@ def inchToMm(x):
     x = x * 25.4
     return float(x)        #No rounding off in intermediary steps
 
+def windDirConversion(x):
+    if x >= 80:
+        return (80 - x)
+    else:
+        return 360 - (80 - x)  #Formula is 360 - abs(x - 80)
+
 df = pd.DataFrame([myDictIndoor])
 dfOutdoor = pd.DataFrame([myDictOutdoor])
 
@@ -52,6 +58,8 @@ df['dewPointin'] = df['dewPointin'].apply(fahrenToCelsius)
 df['windspeedmph'] = df['windspeedmph'].apply(mphToMps)
 df['windgustmph'] = df['windgustmph'].apply(mphToMps)
 df['maxdailygust'] = df['maxdailygust'].apply(mphToMps)
+df['winddir'] = df['winddir'].apply(windDirConversion)
+
 
 df['baromrelin'] = df['baromrelin'].apply(inchToMm)
 df['baromabsin'] = df['baromabsin'].apply(inchToMm)

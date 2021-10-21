@@ -65,15 +65,19 @@ def calcAverageWindDirection(windowSize, summationEast, summationNorth):
         return (np.pi)/2
     elif (summationEastAverage > 0 and summationNorthAverage == 0):
         return (3/4)*2*np.pi
-    else:
+    elif (summationEastAverage > 0 and summationNorthAverage > 0):
         windDirRad = np.arctan(summationEastAverage/summationNorthAverage)
-        if (windDirRad < np.pi):
-            windDirRad += np.pi
-        elif (windDirRad > np.pi):
-            windDirRad -= np.pi
-        
         return windDirRad
-    
+    elif (summationEastAverage < 0 and summationNorthAverage < 0):
+        windDirRad = np.arctan(summationEastAverage/summationNorthAverage) + np.pi
+        return windDirRad
+    elif (summationEastAverage > 0 and summationNorthAverage < 0):
+        windDirRad = np.arctan(summationEastAverage/summationNorthAverage) + np.pi
+        return windDirRad
+    elif(summationEastAverage < 0 and summationNorthAverage > 0):
+        windDirRad = np.arctan(summationEastAverage/summationNorthAverage) + 2*np.pi
+        return windDirRad
+
 
 def retract(df):
     rainSum = df['hourlyrainin'].tail(10).sum()
@@ -123,12 +127,12 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 
 
 toRetract = retract(df)
-myArr = [rainDifference,windSpeedMax, windSpeedAverage,windDirectionAverage] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
+myArr = [windDirectionAverage,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
 #print(type(myArr))
 #print(myArr)
 
 if toRetract:
-    print('[-1,-1,-1,-1]')
+    print('[-1,-1,-1]')
     
 else:
     print(myArr)

@@ -19,8 +19,8 @@ simplefilter(action='ignore', category=DeprecationWarning)
 loaded_model = pickle.load(open('KNN_Updated_17OCT.sav', 'rb'))
 sh = shelve.open('globals')
 
-def deploy(predicted_value, corridor_width):
-  threshold_value = corridor_width/2
+def deploy(predicted_value, threshold_value):
+
   if (predicted_value > threshold_value):
     print('1. Deploy command assigned.')
     
@@ -47,7 +47,7 @@ def arrayExtractor(myLine):
 
 for line in sys.stdin:
 
-    if line.rstrip() == '[-1,-1,-1,-1]':
+    if line.rstrip() == '[-1,-1,-1]':
         print('2. Retract command assigned.')
         
         if(sh['blindStatus'] == 0):
@@ -65,7 +65,7 @@ for line in sys.stdin:
         print('Predicted value is:', pred)
         #print(arrayExtractor(line))
         
-        cmd = deploy(pred,1.91)
+        cmd = deploy(pred,0.75)
         if os.path.isfile('logResults.csv'):
             arrayData = arrayExtractor(line)
             rain = arrayData[0]
