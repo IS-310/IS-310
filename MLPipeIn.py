@@ -72,7 +72,7 @@ for line in sys.stdin:
             maxWind = arrayData[1]
             averageWind = arrayData[2]
             windDir = arrayData[3]
-            parsedPred = str(pred)[2:-2]
+            parsedPred = str(pred)[1:-1]
             loggedResults = [current_time,rain,maxWind,averageWind,windDir,parsedPred]
             f = open('logResults.csv','a')
             csv_writer = csv.writer(f)

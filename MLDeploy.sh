@@ -1,4 +1,4 @@
 #! /bin/bash
 
-echo -n '[7.1,1.5,0.255189,1.842]' | python3 MLPipeIn.py
+echo -n '[6.1,2.3465,9.76,7.257]' | python3 MLPipeIn.py
 
