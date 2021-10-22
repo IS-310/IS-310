@@ -56,7 +56,7 @@ def calcAverageWindDirection(windowSize, summationEast, summationNorth):
     summationEastAverage = summationEast / windowSize
     summationNorthAverage = summationNorth / windowSize
     if (summationEastAverage == 0 and summationNorthAverage == 0):
-        return -2
+        return -1
     elif (summationEastAverage == 0 and summationNorthAverage > 0):
         return np.pi
     elif (summationEastAverage == 0 and summationNorthAverage < 0):
@@ -127,7 +127,7 @@ tempDifference = calcDiffNegative(tenMinutesPriorFeelsLike,latestFeelsLike)
 
 
 toRetract = retract(df)
-myArr = [windDirectionAverage,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
+myArr = [rainDifference,windDirectionAverage,windSpeedMax*rainDifference, windSpeedAverage*rainDifference] #removed 'tempdifference' and 'obtainLastValue(windDirection_MA)'
 #print(type(myArr))
 #print(myArr)
 

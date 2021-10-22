@@ -16,7 +16,7 @@ ser = serial.Serial('/dev/ttyACM0', 9600)
 simplefilter(action='ignore', category=DeprecationWarning)
 
 # load the model from disk
-loaded_model = pickle.load(open('KNN_Updated_17OCT.sav', 'rb'))
+loaded_model = pickle.load(open('SVM_27_October_2021', 'rb'))
 sh = shelve.open('globals')
 
 def deploy(predicted_value, threshold_value):
