@@ -65,7 +65,7 @@ for line in sys.stdin:
         print('Predicted value is:', pred)
         #print(arrayExtractor(line))
         
-        cmd = deploy(pred,0.75)
+        cmd = deploy(pred,0.2)
         if os.path.isfile('logResults.csv'):
             arrayData = arrayExtractor(line)
             rain = arrayData[0]
@@ -82,12 +82,12 @@ for line in sys.stdin:
         else:
             arrayData = arrayExtractor(line)
             rain = arrayData[0]
-            maxWind = arrayData[1]
-            averageWind = arrayData[2]
-            windDir = arrayData[3]
+            avgWindDir = arrayData[1]
+            windMaxRainChange = arrayData[2]
+            windAvgRainChange = arrayData[3]
             parsedPred = str(pred)[2:-2]
-            header = ['Date/Time', 'Rain','Max Wind','Average WInd','Wind DIr', 'Predicted Depth']
-            loggedResults = [current_time,rain,maxWind,averageWind,windDir,parsedPred]
+            header = ['Date/Time', 'Changes in Rain','Avg Wind Dir','WindMax * RainChange','WindAvg * RainChange', 'Predicted Depth']
+            loggedResults = [current_time,rain,avgWindDir,windMaxRainChange,windAvgRainChange,parsedPred]
             
             f = open('logResults.csv','w')
             csv_writer = csv.writer(f)
